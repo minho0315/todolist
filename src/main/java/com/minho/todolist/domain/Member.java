@@ -6,12 +6,16 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 public class Member {
 
     private Long id;
     private String userId;
     private String password;
     private String name;
-    private List<ToDo> todoList;
+
+    public Member(String userId, String password, String name) {
+        this.userId = userId;
+        this.password = password;
+        this.name = name;
+    }
 }
