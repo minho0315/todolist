@@ -37,4 +37,9 @@ public class ToDoController {
         return "/todos/editForm";
     }
 
+    @GetMapping("/todos/logout")
+    public String logout() {
+        return "todos/logout";
+    }
+
 }
