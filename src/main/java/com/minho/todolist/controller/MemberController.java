@@ -31,6 +31,6 @@ public class MemberController {
     {
         memberService.join(member);
         log.info("member={}", member);
-        return "home";
+        return "redirect:/";
     }
 }

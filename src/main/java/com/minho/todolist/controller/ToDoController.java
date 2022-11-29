@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ToDoController {
 
-    @GetMapping("/todos")
+    @PostMapping("/todos")
     public String todolist()
     {
         return "/todos/todolist";
