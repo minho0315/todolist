@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ToDoController {
 
-    @PostMapping("/todos")
+    @GetMapping("/todos")
     public String todolist()
     {
         return "/todos/todolist";
@@ -35,11 +35,6 @@ public class ToDoController {
     public String edit()
     {
         return "/todos/editForm";
-    }
-
-    @GetMapping("/todos/logout")
-    public String logout() {
-        return "todos/logout";
     }
 
 }

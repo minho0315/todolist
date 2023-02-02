@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
 @Data
 public class ToDo {
 
-    private Long memberId;
+    private Long id;
     private String content;
     private LocalDateTime createDate;
     private LocalDateTime endData;
     private DoState state;
 
-    public ToDo(Long memberId, String content, LocalDateTime createDate, LocalDateTime endData, DoState state) {
-        this.memberId = memberId;
+    public ToDo(Long id, String content, LocalDateTime createDate, LocalDateTime endData, DoState state) {
+        this.id = id;
         this.content = content;
         this.createDate = createDate;
         this.endData = endData;
