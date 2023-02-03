@@ -1,24 +1,23 @@
 package com.minho.todolist.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Entity
+@Getter @Setter
+@Table(name = "todo")
 public class ToDo {
 
+    @Id @GeneratedValue
+    @Column(name = "todo_id")
     private Long id;
     private String content;
-    private LocalDateTime createDate;
-    private LocalDateTime endData;
-    private DoState state;
 
-    public ToDo(Long id, String content, LocalDateTime createDate, LocalDateTime endData, DoState state) {
-        this.id = id;
-        this.content = content;
-        this.createDate = createDate;
-        this.endData = endData;
-        this.state = state;
-    }
+    @Enumerated(EnumType.STRING)
+    private DoState state;
 }
