@@ -4,9 +4,54 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
-    <title>Title</title>
+    <style>
+.container {
+max-width: 560px;
+}
+</style>
+    <title>ToDoList</title>
 </head>
 <body>
-<h4>todolist</h4>
+<div class="container">
+    <div class="py-5 text-center text-primary">
+        <h1>To Do List</h1>
+    </div>
+    <div class="d-flex flex-column mb-3">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary btn-lg" type="button"
+                    th:onclick="|location.href='@{/todos/add}'|">
+                Add
+            </button>
+        </div>
+        <table class="table table-borderless p-2">
+            <tbody>
+                <tr th:each="toDo : ${toDos}" class="card my-3">
+                    <td class="card-body">
+                        <div class="d-flex">
+                            <input class="m-1" type="checkbox" disabled="disabled" th:checked="${toDo.state}">
+                            <div class="m-1 align-self-center flex-grow-1" th:text="${toDo.content}"></div>
+                            <button class="btn btn-outline-primary mx-2" type="button"
+                                    th:onclick="|location.href='@{/todos/edit}'|">
+                                Edit
+                            </button>
+                            <a th:href="'javascript:cancel('+${toDo.id}+')'"
+                               class="btn btn-outline-primary mx-2">X</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
 </body>
+<script>
+function cancel(id) {
+var form = document.createElement("form");
+form.setAttribute("method", "post");
+form.setAttribute("action", "/todos/" + id + "/cancel");
+document.body.appendChild(form);
+form.submit();
+}
+</script>
 </html>

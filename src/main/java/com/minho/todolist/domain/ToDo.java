@@ -17,7 +17,5 @@ public class ToDo {
     @Column(name = "todo_id")
     private Long id;
     private String content;
-
-    @Enumerated(EnumType.STRING)
-    private DoState state;
+    private Boolean state;
 }

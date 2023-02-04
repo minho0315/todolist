@@ -1,6 +1,5 @@
 package com.minho.todolist.service;
 
-import com.minho.todolist.domain.DoState;
 import com.minho.todolist.domain.ToDo;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ public class ToDoServiceTest {
 
         //Given
         ToDo toDo = new ToDo();
-        toDo.setState(DoState.ToDo);
+        toDo.setState(false);
         toDo.setContent("공부하기");
 
         //When

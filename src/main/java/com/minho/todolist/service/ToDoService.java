@@ -1,6 +1,5 @@
 package com.minho.todolist.service;
 
-import com.minho.todolist.domain.DoState;
 import com.minho.todolist.domain.ToDo;
 import com.minho.todolist.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +29,15 @@ public class ToDoService {
     }
 
     @Transactional
-    public void updateToDo(Long toDoId, String content, DoState doState) {
+    public void updateToDo(Long toDoId, String content, Boolean state) {
         ToDo findToDo = toDoRepository.findOne(toDoId);
         findToDo.setContent(content);
-        findToDo.setState(doState);
+        findToDo.setState(state);
+    }
+
+    @Transactional
+    public void cancelTodo(Long toDoId) {
+        ToDo findToDo = toDoRepository.findOne(toDoId);
+        toDoRepository.remove(findToDo);
     }
 }
