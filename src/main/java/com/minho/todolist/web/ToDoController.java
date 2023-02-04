@@ -35,15 +35,19 @@ public class ToDoController {
     }
 
     @GetMapping("/todos/add")
-    public String addForm()
+    public String addForm(Model model)
     {
+        ToDo toDo = new ToDo();
+        toDo.setState(true);
+        model.addAttribute("toDo", toDo);
         return "/todos/addForm";
     }
 
     @PostMapping("/todos/add")
-    public String save()
+    public String save(ToDo toDo)
     {
-        return "/todos/todolist";
+        toDoService.saveToDo(toDo);
+        return "redirect:/todos";
     }
 
     @GetMapping("/todos/edit")
