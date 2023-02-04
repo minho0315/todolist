@@ -14,10 +14,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        ToDo toDo = new ToDo();
-        toDo.setContent("test");
-        toDo.setState(false);
-        toDoService.saveToDo(toDo);
         return "home";
     }
 

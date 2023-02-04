@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -37,9 +38,7 @@ public class ToDoController {
     @GetMapping("/todos/add")
     public String addForm(Model model)
     {
-        ToDo toDo = new ToDo();
-        toDo.setState(true);
-        model.addAttribute("toDo", toDo);
+        model.addAttribute("toDo", new ToDo());
         return "/todos/addForm";
     }
 
@@ -50,16 +49,20 @@ public class ToDoController {
         return "redirect:/todos";
     }
 
-    @GetMapping("/todos/edit")
-    public String editForm()
+    @GetMapping("/todos/{toDoId}/edit")
+    public String editForm(@PathVariable("toDoId") Long toDoId, Model model)
     {
+        ToDo findToDo = toDoService.findOne(toDoId);
+        model.addAttribute("toDo", findToDo);
         return "/todos/editForm";
     }
 
-    @PostMapping("/todos/edit")
-    public String edit()
+    @PostMapping("/todos/{toDoId}/edit")
+    public String edit(@ModelAttribute("toDo") ToDo toDo)
     {
-        return "/todos/editForm";
+
+        toDoService.updateToDo(toDo.getId(), toDo.getContent(), toDo.getState());
+        return "redirect:/todos";
     }
 
 }

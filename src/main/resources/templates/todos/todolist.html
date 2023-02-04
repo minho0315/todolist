@@ -30,12 +30,14 @@ max-width: 560px;
                         <div class="d-flex">
                             <input class="m-1" type="checkbox" disabled="disabled" th:checked="${toDo.state}">
                             <div class="m-1 align-self-center flex-grow-1" th:text="${toDo.content}"></div>
-                            <button class="btn btn-outline-primary mx-2" type="button"
-                                    th:onclick="|location.href='@{/todos/edit}'|">
-                                Edit
-                            </button>
+<!--                            <button class="btn btn-outline-primary mx-2" type="button"-->
+<!--                                    th:onclick="|location.href='@{/todos/edit}'|">-->
+<!--                                Edit-->
+<!--                            </button>-->
+                            <a href="#" th:href="@{/todos/{id}/edit (id=${toDo.id})}"
+                               class="btn btn-outline-primary mx-2" role="button">Edit</a>
                             <a th:href="'javascript:cancel('+${toDo.id}+')'"
-                               class="btn btn-outline-primary mx-2">X</a>
+                               class="btn btn-outline-primary mx-2" role="button">X</a>
                         </div>
                     </td>
                 </tr>
