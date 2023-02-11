@@ -18,4 +18,8 @@ public class ToDo {
     private Long id;
     private String content;
     private Boolean state;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 }
