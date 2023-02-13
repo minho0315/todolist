@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,4 +26,12 @@ public class MemberRepository {
         return em.find(Member.class, id);
     }
 
+    public List<Member> findAll() { return em.createQuery("select m from Member m", Member.class).getResultList(); }
+
+    public List<Member> findByIdPassword(String userId, String password) {
+        return em.createQuery("select m from Member m where m.userId = :userId AND m.password = :password", Member.class)
+                .setParameter("userId", userId)
+                .setParameter("password", password)
+                .getResultList();
+    }
 }
