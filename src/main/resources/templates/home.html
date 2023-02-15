@@ -20,8 +20,15 @@ max-width: 560px;
     <div class="row">
         <div class="col">
             <button class="w-100 btn btn-primary btn-lg" type="button"
-                    th:onclick="|location.href='@{/todos}'|">
-                Enter My To Do List
+                    th:onclick="|location.href='@{/members/login}'|">
+                LogIn
+            </button>
+        </div>
+
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg" type="button"
+                    th:onclick="|location.href='@{/members/add}'|">
+                Sign Up
             </button>
         </div>
     </div>

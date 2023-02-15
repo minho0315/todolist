@@ -1,6 +1,8 @@
 package com.minho.todolist.web;
 
+import com.minho.todolist.domain.Member;
 import com.minho.todolist.domain.ToDo;
+import com.minho.todolist.service.MemberService;
 import com.minho.todolist.service.ToDoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,12 +21,24 @@ import java.util.List;
 public class ToDoController {
 
     private final ToDoService toDoService;
+    private final MemberService memberService;
+
+    private Long todoMemberId;
 
     @GetMapping("/todos")
     public String todolist(Model model)
     {
-        List<ToDo> toDos = toDoService.findToDos();
-        model.addAttribute("toDos",toDos);
+        Member member = memberService.findMember(todoMemberId);
+        model.addAttribute("member",member);
+        return "/todos/todolist";
+    }
+
+    @PostMapping("/todos")
+    public String checkMember(Member member, Model model)
+    {
+        List<Member> findMembers = memberService.findByIdPassword(member);
+        todoMemberId = findMembers.get(0).getId();
+        model.addAttribute("member",findMembers.get(0));
         return "/todos/todolist";
     }
 
@@ -45,7 +59,8 @@ public class ToDoController {
     @PostMapping("/todos/add")
     public String save(ToDo toDo)
     {
-        toDoService.saveToDo(toDo);
+        Member member = memberService.findMember(todoMemberId);
+        member.getToDos().add(toDo);
         return "redirect:/todos";
     }
 

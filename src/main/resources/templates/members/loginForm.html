@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+  <title>LogIn</title>
+</head>
+<body>
+<div class="container">
+  <div class="py-5 text-center text-primary">
+    <h1>LogIn</h1>
+  </div>
+  <form th:action="@{/todos}" th:object="${member}" method="post">
+    <div class="d-flex my-3 fs-4">ID</div>
+    <div class="d-flex my-3">
+      <input type="text" th:field="*{userId}" class="flex-grow-1">
+    </div>
+    <div class="d-flex my-3 fs-4">Password</div>
+    <div class="d-flex my-3">
+      <input type="text" th:field="*{password}" class="flex-grow-1">
+    </div>
+    <div class="d-flex my-3">
+      <button type="submit" class="btn btn-primary me-2 w-50">LogIn</button>
+      <button type="button" class="btn btn-primary ms-2 w-50"
+              th:onclick="|location.href='@{/}'|">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+</body>
+</html>
