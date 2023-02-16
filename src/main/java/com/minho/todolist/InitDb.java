@@ -1,5 +1,6 @@
 package com.minho.todolist;
 
+import com.minho.todolist.domain.Member;
 import com.minho.todolist.domain.ToDo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -7,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.List;
 
-//@Component
+@Component
 @RequiredArgsConstructor
 public class InitDb {
 
@@ -36,6 +39,9 @@ public class InitDb {
 
             ToDo toDo3 = createToDo("test3", false);
             em.persist(toDo3);
+
+            Member member1 = Member.createMember("minho", "123", "123", toDo1, toDo2, toDo3);
+            em.persist(member1);
 
         }
 
