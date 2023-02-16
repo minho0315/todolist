@@ -34,4 +34,11 @@ public class MemberRepository {
                 .setParameter("password", password)
                 .getResultList();
     }
+
+    public List<Member> findAllWithToDo() {
+        return em.createQuery(
+                        "select distinct m from Member m" +
+                                " join fetch m.toDos oi", Member.class)
+                .getResultList();
+    }
 }
