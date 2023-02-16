@@ -17,7 +17,6 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class ToDoController {
 
     private final ToDoService toDoService;
@@ -45,7 +44,6 @@ public class ToDoController {
     @PostMapping(value = "/todos/{toDoId}/cancel")
     public String cancelToDo(@PathVariable("toDoId") Long toDoId) {
         toDoService.cancelTodo(toDoId);
-        log.info(toDoId.toString());
         return "redirect:/todos";
     }
 
@@ -60,7 +58,8 @@ public class ToDoController {
     public String save(ToDo toDo)
     {
         Member member = memberService.findMember(todoMemberId);
-        member.getToDos().add(toDo);
+        toDo.setMember(member);
+        toDoService.saveToDo(toDo);
         return "redirect:/todos";
     }
 
