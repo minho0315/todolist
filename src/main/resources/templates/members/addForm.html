@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
     <title>Sign Up</title>
 </head>
 <body>
@@ -12,18 +18,31 @@
         <h1>Sign Up</h1>
     </div>
     <form th:action="@{/members/add}" th:object="${member}" method="post">
+
         <div class="d-flex my-3 fs-4">ID</div>
         <div class="d-flex my-3">
-            <input type="text" th:field="*{userId}" class="flex-grow-1">
+            <input type="text" th:field="*{userId}" th:errorclass="field-error" class="flex-grow-1">
         </div>
+        <div class="field-error" th:errors="*{userId}">
+            아이디 오류
+        </div>
+
         <div class="d-flex my-3 fs-4">Password</div>
         <div class="d-flex my-3">
-            <input type="text" th:field="*{password}" class="flex-grow-1">
+            <input type="text" th:field="*{password}" th:errorclass="field-error" class="flex-grow-1">
         </div>
+        <div class="field-error" th:errors="*{password}">
+            패스워드 오류
+        </div>
+
         <div class="d-flex my-3 fs-4">Username</div>
         <div class="d-flex my-3">
-            <input type="text" th:field="*{username}" class="flex-grow-1">
+            <input type="text" th:field="*{username}" th:errorclass="field-error" class="flex-grow-1">
         </div>
+        <div class="field-error" th:errors="*{username}">
+            유저이름 오류
+        </div>
+
         <div class="d-flex my-3">
             <button type="submit" class="btn btn-primary me-2 w-50">Sign Up</button>
             <button type="button" class="btn btn-primary ms-2 w-50"

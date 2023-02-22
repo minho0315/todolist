@@ -29,4 +29,8 @@ public class MemberService {
         return memberRepository.findByIdPassword(member.getUserId(), member.getPassword());
     }
 
+    public List<Member> findByUserId(String userId) {
+        return memberRepository.findByUserId(userId);
+    }
+
 }

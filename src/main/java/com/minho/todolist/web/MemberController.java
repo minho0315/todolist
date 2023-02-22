@@ -2,17 +2,23 @@ package com.minho.todolist.web;
 
 import com.minho.todolist.domain.Member;
 import com.minho.todolist.service.MemberService;
+import com.minho.todolist.web.form.MemberSaveForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -24,7 +30,23 @@ public class MemberController {
     }
 
     @PostMapping("/members/add")
-    public String save(Member member) {
+    public String save(@Validated @ModelAttribute("member") MemberSaveForm form, BindingResult bindingResult) {
+
+        List<Member> members = memberService.findByUserId(form.getUserId());
+        if (members.size() != 0) {
+            bindingResult.rejectValue("userId", "UserIdDuplication",null);
+        }
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "members/addForm";
+        }
+
+        Member member = new Member();
+        member.setUserId(form.getUserId());
+        member.setPassword(form.getPassword());
+        member.setUsername(form.getUsername());
+
         memberService.saveMember(member);
         return "redirect:/";
     }
