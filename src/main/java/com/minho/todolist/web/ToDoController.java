@@ -32,10 +32,19 @@ public class ToDoController {
         return "/todos/todolist";
     }
 
+    @GetMapping("/todos/{memberId}")
+    public String todo(@PathVariable Long memberId, Model model)
+    {
+        Member member = memberService.findMember(memberId);
+        todoMemberId = memberId;
+        model.addAttribute("member",member);
+        return "/todos/todolist";
+    }
+
     @PostMapping("/todos")
     public String checkMember(Member member, Model model)
     {
-        List<Member> findMembers = memberService.findByIdPassword(member);
+        List<Member> findMembers = memberService.findByIdPassword(member.getUserId(), member.getPassword());
         todoMemberId = findMembers.get(0).getId();
         model.addAttribute("member",findMembers.get(0));
         return "/todos/todolist";

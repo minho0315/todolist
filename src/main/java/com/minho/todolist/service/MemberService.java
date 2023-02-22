@@ -25,8 +25,8 @@ public class MemberService {
 
     public List<Member> findAll() { return memberRepository.findAll(); }
 
-    public List<Member> findByIdPassword(Member member) {
-        return memberRepository.findByIdPassword(member.getUserId(), member.getPassword());
+    public List<Member> findByIdPassword(String userId, String password) {
+        return memberRepository.findByIdPassword(userId, password);
     }
 
     public List<Member> findByUserId(String userId) {

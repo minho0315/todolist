@@ -2,6 +2,7 @@ package com.minho.todolist.web;
 
 import com.minho.todolist.domain.Member;
 import com.minho.todolist.service.MemberService;
+import com.minho.todolist.web.form.MemberLoginForm;
 import com.minho.todolist.web.form.MemberSaveForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,14 +59,20 @@ public class MemberController {
     }
 
     @PostMapping("/members/login")
-    public String login(Member member) {
-        List<Member> findMember = memberService.findByIdPassword(member);
+    public String login(@Validated @ModelAttribute("member")MemberLoginForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
+        List<Member> findMember = memberService.findByIdPassword(form.getUserId(), form.getPassword());
         if (findMember.isEmpty()) {
-            return "redirect:/members/login";
-        } else {
-            return "todos/todolist";
+            bindingResult.reject("UserIdPasswordNotMatch",null,null);
         }
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "members/loginForm";
+        }
+
+        redirectAttributes.addAttribute("memberId", findMember.get(0).getId());
+        return "redirect:/todos/{memberId}";
     }
 
     @GetMapping("/members/logout")
