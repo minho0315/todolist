@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
     <title>Add to do</title>
 </head>
 <body>
@@ -12,13 +18,21 @@
         <h1>Add to do</h1>
     </div>
     <form th:action="@{/todos/add}" th:object="${toDo}" method="post">
+
         <div class="d-flex my-3">
-            <input class="m-1" type="checkbox" th:field="*{state}">
-            <div class="m-1">Check(Uncheck)</div>
+            <label>
+                <input class="m-1" type="checkbox" th:field="*{state}">Check(Uncheck)
+            </label>
         </div>
+
         <div class="d-flex my-3">
-            <input type="text" th:field="*{content}" class="flex-grow-1">
+            <input type="text" th:field="*{content}" th:errorClass="field-error" class="flex-grow-1">
         </div>
+
+        <div class="field-error" th:errors="*{content}" >
+            내용 오류
+        </div>
+
         <div class="d-flex my-3">
             <button type="submit" class="btn btn-primary me-2 w-50">Submit</button>
             <button type="button" class="btn btn-primary ms-2 w-50"

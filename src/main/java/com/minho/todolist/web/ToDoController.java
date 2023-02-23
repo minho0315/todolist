@@ -4,19 +4,25 @@ import com.minho.todolist.domain.Member;
 import com.minho.todolist.domain.ToDo;
 import com.minho.todolist.service.MemberService;
 import com.minho.todolist.service.ToDoService;
+import com.minho.todolist.web.form.ToDoSaveForm;
+import com.minho.todolist.web.form.ToDoUpdateForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ToDoController {
 
     private final ToDoService toDoService;
@@ -64,11 +70,21 @@ public class ToDoController {
     }
 
     @PostMapping("/todos/add")
-    public String save(ToDo toDo)
+    public String save(@Validated @ModelAttribute("toDo") ToDoSaveForm form, BindingResult bindingResult)
     {
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "todos/addForm";
+        }
+
         Member member = memberService.findMember(todoMemberId);
+
+        ToDo toDo = new ToDo();
+        toDo.setContent(form.getContent());
+        toDo.setState(form.getState());
         toDo.setMember(member);
         toDoService.saveToDo(toDo);
+
         return "redirect:/todos";
     }
 
@@ -81,10 +97,14 @@ public class ToDoController {
     }
 
     @PostMapping("/todos/{toDoId}/edit")
-    public String edit(@ModelAttribute("toDo") ToDo toDo)
+    public String edit(@Validated @ModelAttribute("toDo") ToDoUpdateForm form, BindingResult bindingResult)
     {
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {} ", bindingResult);
+            return "todos/editForm";
+        }
 
-        toDoService.updateToDo(toDo.getId(), toDo.getContent(), toDo.getState());
+        toDoService.updateToDo(form.getId(), form.getContent(), form.getState());
         return "redirect:/todos";
     }
 
