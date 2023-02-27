@@ -4,6 +4,7 @@ import com.minho.todolist.domain.Member;
 import com.minho.todolist.service.MemberService;
 import com.minho.todolist.web.form.MemberLoginForm;
 import com.minho.todolist.web.form.MemberSaveForm;
+import com.minho.todolist.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -59,7 +62,8 @@ public class MemberController {
     }
 
     @PostMapping("/members/login")
-    public String login(@Validated @ModelAttribute("member")MemberLoginForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String login(@Validated @ModelAttribute("member")MemberLoginForm form, BindingResult bindingResult,
+                        HttpServletRequest request) {
 
         List<Member> findMember = memberService.findByIdPassword(form.getUserId(), form.getPassword());
         if (findMember.isEmpty()) {
@@ -71,13 +75,20 @@ public class MemberController {
             return "members/loginForm";
         }
 
-        redirectAttributes.addAttribute("memberId", findMember.get(0).getId());
-        return "redirect:/todos/{memberId}";
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER, findMember.get(0));
+
+        return "redirect:/todos";
     }
 
-    @GetMapping("/members/logout")
-    public String logout() {
-        return "home";
+    @PostMapping("/members/logout")
+    public String logout(HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/";
     }
 
 }
