@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,8 @@ public class ToDoApiController {
 
     @Data
     static class CreateToDoRequest {
+
+        @NotEmpty
         private String content;
     }
 
@@ -69,8 +72,14 @@ public class ToDoApiController {
     @PutMapping("/api/todos/{id}")
     public UpdateToDoResponse updateToDo(@PathVariable("id") Long id, @RequestBody @Valid UpdateToDoRequest request) {
 
-        toDoService.updateToDo(id, request.content, request.state);
         ToDo findToDo = toDoService.findOne(id);
+
+        if (findToDo == null) {
+            throw new IllegalArgumentException("잘못된 입력 값");
+        }
+
+        toDoService.updateToDo(id, request.content, request.state);
+
         return new UpdateToDoResponse(findToDo.getId(), findToDo.getContent(), findToDo.getState());
     }
 
