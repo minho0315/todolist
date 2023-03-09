@@ -18,24 +18,83 @@ class MemberServiceTest {
     @Autowired MemberService memberService;
 
     @Test
-    public void 저장() {
+    public void saveMember() {
         //given
-
-        ToDo toDo = new ToDo();
-        toDo.setContent("test1");
-
-        List<ToDo> toDos = new ArrayList<>();
-        toDos.add(toDo);
-
-        Member member = new Member();
-        member.setUsername("민호");
-        member.setPassword("minho");
-        member.setToDos(toDos);
+        Member member = createMember("save member test", "saveMember", "savePassword", "saveUserId");
 
         //when
         Long savedMemberId = memberService.saveMember(member);
 
         //then
         Assertions.assertThat(member.getId()).isEqualTo(savedMemberId);
+    }
+
+    @Test
+    public void findMember() {
+        //given
+        Member member = createMember("find member test", "findMember", "findPassword", "findUserId");
+        Long savedMemberId = memberService.saveMember(member);
+
+        //when
+        Member findMember = memberService.findMember(savedMemberId);
+
+        //then
+        Assertions.assertThat(savedMemberId).isEqualTo(findMember.getId());
+    }
+
+    @Test
+    public void findAll() {
+        //given
+        Member member1 = createMember("member test1", "member1", "password1" , "userId1");
+        Member member2 = createMember("member test2", "member2", "password2", "userId2");
+        memberService.saveMember(member1);
+        memberService.saveMember(member2);
+
+        //when
+        List<Member> findMembers = memberService.findAll();
+
+        //then
+        Assertions.assertThat(2).isEqualTo(findMembers.size());
+    }
+
+    @Test
+    public void findByIdPassword() {
+        //given
+        Member member = createMember("member test1", "member1", "password1", "userId1");
+        memberService.saveMember(member);
+
+        //when
+        List<Member> findMembers = memberService.findByIdPassword(member.getUserId(), member.getPassword());
+
+        //then
+        Assertions.assertThat(member.getId()).isEqualTo(findMembers.get(0).getId());
+    }
+
+    @Test
+    public void findByUserId() {
+        //given
+        Member member = createMember("member test1", "member1", "password1", "userId1");
+        memberService.saveMember(member);
+
+        //when
+        List<Member> findMembers = memberService.findByUserId(member.getUserId());
+
+        //then
+        Assertions.assertThat(member.getId()).isEqualTo(findMembers.get(0).getId());
+    }
+
+    public Member createMember(String content, String username, String password, String userId) {
+        ToDo toDo = new ToDo();
+        toDo.setContent(content);
+
+        List<ToDo> toDos = new ArrayList<>();
+        toDos.add(toDo);
+
+        Member member = new Member();
+        member.setUsername(username);
+        member.setPassword(password);
+        member.setUserId(userId);
+        member.setToDos(toDos);
+        return member;
     }
 }
