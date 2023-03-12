@@ -1,36 +1,17 @@
 package com.minho.todolist.repository;
 
 import com.minho.todolist.domain.ToDo;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-@Repository
-@RequiredArgsConstructor
-public class ToDoRepository {
+public interface ToDoRepository {
 
-    private final EntityManager em;
+    public Long save(ToDo toDo);
 
-    public Long save(ToDo toDo) {
-        if (toDo.getId() == null) {
-            em.persist(toDo);
-        } else {
-            em.merge(toDo);
-        }
-        return toDo.getId();
-    }
+    public ToDo findOne(Long id);
 
-    public ToDo findOne(Long id) {
-        return em.find(ToDo.class, id);
-    }
+    public List<ToDo> findAll();
 
-    public List<ToDo> findAll() {
-        return em.createQuery("select t from ToDo t", ToDo.class).getResultList();
-    }
-
-    public void remove(ToDo toDo) {
-        em.remove(toDo);
-    }
+    public void remove(ToDo toDo);
 }
