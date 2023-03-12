@@ -1,7 +1,10 @@
 package com.minho.todolist.service;
 
 import com.minho.todolist.domain.ToDo;
+import com.minho.todolist.repository.FakeToDoRepository;
+import com.minho.todolist.repository.ToDoRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,11 +14,16 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
-@Transactional
 public class ToDoServiceTest {
 
-    @Autowired ToDoService toDoService;
+    private ToDoService toDoService;
+    private ToDoRepository toDoRepository;
+
+    @BeforeEach
+    void setUp() {
+        toDoRepository = new FakeToDoRepository();
+        toDoService = new ToDoService(toDoRepository);
+    }
 
     @Test
     public void saveToDo() {
