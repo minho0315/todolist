@@ -1,7 +1,7 @@
 package com.minho.todolist.service;
 
 import com.minho.todolist.domain.ToDo;
-import com.minho.todolist.repository.ToDoRepository;
+import com.minho.todolist.domain.ToDoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

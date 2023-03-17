@@ -2,7 +2,7 @@ package com.minho.todolist.api;
 
 import com.minho.todolist.domain.Member;
 import com.minho.todolist.domain.ToDo;
-import com.minho.todolist.repository.MemberRepository;
+import com.minho.todolist.domain.MemberRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

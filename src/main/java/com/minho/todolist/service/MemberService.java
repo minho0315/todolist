@@ -1,7 +1,7 @@
 package com.minho.todolist.service;
 
 import com.minho.todolist.domain.Member;
-import com.minho.todolist.repository.MemberRepository;
+import com.minho.todolist.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.minho.todolist.repository;
+package com.minho.todolist.domain;
 
 import com.minho.todolist.domain.Member;
 

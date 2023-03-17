@@ -1,6 +1,7 @@
 package com.minho.todolist.repository;
 
 import com.minho.todolist.domain.Member;
+import com.minho.todolist.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

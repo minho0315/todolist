@@ -3,13 +3,10 @@ package com.minho.todolist.service;
 import com.minho.todolist.domain.Member;
 import com.minho.todolist.domain.ToDo;
 import com.minho.todolist.repository.FakeMemberRepository;
-import com.minho.todolist.repository.MemberRepository;
+import com.minho.todolist.domain.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.minho.todolist.repository;
 
 import com.minho.todolist.domain.Member;
-import com.minho.todolist.domain.ToDo;
+import com.minho.todolist.domain.MemberRepository;
 
 import java.util.HashMap;
 import java.util.List;
